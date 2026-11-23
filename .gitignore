@@ -1,0 +1,31 @@
+# Your own data and configuration. Never commit these.
+/data/
+*.db
+*.db-wal
+*.db-shm
+.env
+config/local.yaml
+config/*.local.yaml
+
+# A filled ICP or service-category file holds your positioning, your target
+# accounts and your pricing posture. Keep it in $LNI_CONFIG_DIR instead.
+config/profile.filled.yaml
+config/icps.filled.yaml
+config/business_services.filled.yaml
+
+# Exports, which contain records about other people.
+*.csv
+!tests/fixtures/*.csv
+!config/examples/*.csv
+
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.DS_Store

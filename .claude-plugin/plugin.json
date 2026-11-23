@@ -1,0 +1,14 @@
+{
+  "name": "linkedin-network-intelligence",
+  "version": "0.1.0",
+  "description": "12 skills for LinkedIn network intelligence and relationship growth: ICPs, discovery from authorised sources, a configurable 100-point scoring engine, engagement propensity, a networking CRM, lead intelligence, connection drafting, relationship cadence, content attribution, funnel reporting and a mandatory safety layer. Drafts everything, sends nothing. Not affiliated with LinkedIn.",
+  "author": {
+    "name": "Dnyanesh Chandewar"
+  },
+  "license": "MIT",
+  "keywords": [
+    "linkedin", "networking", "crm", "icp", "lead-generation",
+    "relationship-management", "agent-skills", "claude-code"
+  ],
+  "skills": "./skills"
+}
