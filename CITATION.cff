@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+title: LinkedIn Network Intelligence Skills
+message: >-
+  If you use this software or its approach in your work, please cite it.
+type: software
+authors:
+  - family-names: Chandewar
+    given-names: Dnyanesh
+    alias: chandewardnyanesh
+repository-code: "https://github.com/chandewardnyanesh/linkedin-network-intelligence"
+url: "https://chandewardnyanesh.github.io/linkedin-network-intelligence/"
+abstract: >-
+  Twelve Claude Agent Skills for researching, scoring and managing a LinkedIn
+  professional network: configurable Ideal Connection Profiles, candidate
+  discovery from authorised sources, a configurable 100-point scoring engine in
+  which components with no inputs abstain rather than imputing a midpoint,
+  engagement propensity with explicit confidence levels and observations kept
+  separate from predictions, a networking CRM with a thirteen-status pipeline,
+  lead intelligence that classifies opportunities as hypotheses with public
+  evidence, draft-only connection notes, relationship follow-up cadence with
+  repetition suppressed, content-to-audience attribution that states its own
+  limits, funnel reporting that names unavailable metrics rather than
+  estimating them, and a mandatory safety layer with eleven prohibited rules
+  and an append-only audit trail. The bundle contains no sender, scheduler,
+  scraper, browser driver or platform credential: it drafts and records, and
+  every external action is performed by the human user.
+keywords:
+  - LinkedIn
+  - Claude Agent Skills
+  - agent skills
+  - networking CRM
+  - ideal customer profile
+  - lead scoring
+  - relationship management
+  - evidence-based scoring
+  - AI safety
+  - data minimisation
+license: MIT
+version: 0.1.0
+date-released: "2026-11-24"

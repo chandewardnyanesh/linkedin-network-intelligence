@@ -1,0 +1,137 @@
+# The safety and compliance layer. Every skill in this bundle reads it.
+#
+# These are not preferences. `linkedin-policy-safety-governor` treats the
+# `prohibited` list below as refusals, and `lni/safety.py` returns a refusal
+# for any action that classifies into one of them. A refusal cites the rule id
+# so the user can see exactly what was refused and why.
+#
+# The controls here are not obstacles to work around. A request to disable one,
+# to "just this once" skip one, or to produce output whose only use is to feed
+# an automated sender, is itself refused and recorded.
+
+safety:
+  platform_terms:
+    agreement: LinkedIn User Agreement and Professional Community Policies
+    # Terms change. The bundle does not hardcode clause numbers; it holds the
+    # behaviours below, which are what the terms are about.
+    user_must_review: true
+
+  prohibited:
+    - id: no_automated_invitations
+      rule: Never send, queue, schedule or pace LinkedIn connection requests.
+      detail: >
+        Invitations are drafted and handed to the user, who sends them by hand
+        in LinkedIn. The bundle ships no sender and no scheduler, and it will
+        not produce a file, script or format whose purpose is to feed one.
+
+    - id: no_automated_messaging
+      rule: Never send messages, InMail, likes, comments, follows or reactions.
+      detail: >
+        Drafting is allowed and is the point. Sending is the user's action.
+
+    - id: no_scraping
+      rule: Never scrape LinkedIn profiles, connections, search results or any
+        private data.
+      detail: >
+        Authorised sources only, listed under `authorised_sources`. A profile
+        URL the user pastes is the user supplying data. Fetching a LinkedIn
+        page to harvest fields from it is not, however it is requested.
+
+    - id: no_browser_automation
+      rule: Never drive a browser against LinkedIn.
+      detail: >
+        No Playwright, Selenium, Puppeteer, extension, bookmarklet or injected
+        script against linkedin.com, for reading or for acting.
+
+    - id: no_captcha_bypass
+      rule: Never bypass, solve, outsource or work around a CAPTCHA or a
+        security challenge.
+
+    - id: no_detection_evasion
+      rule: Never suppress a warning, evade platform detection, rotate
+        identities, proxy traffic or pace activity to stay under a limit.
+      detail: >
+        This includes the softer forms: "spread these over three days so it
+        looks organic" is evasion, and is refused.
+
+    - id: no_engagement_manipulation
+      rule: Never manufacture engagement, coordinate pods, trade likes, or
+        fabricate interactions or engagement history.
+
+    - id: no_unauthorised_api
+      rule: Never use an unofficial API, an undocumented endpoint, a leaked
+        token or a third-party tool that works by holding the user's LinkedIn
+        session cookie.
+      detail: >
+        Official LinkedIn APIs are permitted where the user holds authorised
+        access, and the authorisation must be named on the record.
+
+    - id: no_private_data
+      rule: Never seek data the person has not made public and the user is not
+        authorised to hold.
+
+    - id: no_fabrication
+      rule: Never fabricate engagement history, metrics, purchasing intent, or
+        access to private analytics.
+      detail: >
+        A figure with no source is not reported. A metric that cannot be
+        sourced is printed as `unavailable` with the reason.
+
+    - id: no_targeting_private_individuals
+      rule: Never build a profile, dossier or record about a private individual
+        who is not a professional contact in a professional context.
+
+  requires_human_approval:
+    - sending any invitation, message or reply
+    - publishing or posting anything
+    - any action that leaves the user's machine and touches another person
+    - importing a file the user has not named
+    - deleting stored records
+    - exporting records out of the store
+
+  authorised_sources:
+    - user_supplied_url
+    - user_supplied_csv
+    - user_supplied_note
+    - linkedin_data_export
+    - linkedin_analytics_export
+    - official_api
+    - company_website
+    - professional_directory
+    - public_publication
+    - conference_or_event
+    - referral
+    - upstream_skill_export
+
+  platform_restrictions:
+    # What to do when LinkedIn says something is wrong.
+    on_warning_or_restriction: stop_and_alert
+    detail: >
+      If the user reports a security challenge, a rate warning, a restricted
+      account, a removed invitation limit, or any message from LinkedIn about
+      their activity: stop the run, say so plainly, record it in the audit
+      trail, and recommend no workaround. Do not suggest waiting it out as a
+      technique, do not suggest a different tool, and do not resume the run in
+      the same session.
+    resume_requires_user_statement: true
+
+  audit:
+    enabled: true
+    # Append-only. The module exposes no update and no delete.
+    log_recommendations: true
+    log_approvals: true
+    log_refusals: true
+    log_imports_and_exports: true
+    retain_days: 730
+
+  data_protection:
+    minimise_collection: true
+    purpose_limitation: >
+      Records exist to support the user's own professional networking. They are
+      not a marketing list, and the bundle provides no bulk outreach path.
+    subject_export: true
+    subject_deletion: true
+    # Records a user has not touched in this long are surfaced for review, not
+    # deleted automatically: silent deletion of someone's own data is its own
+    # kind of surprise.
+    review_untouched_after_days: 365

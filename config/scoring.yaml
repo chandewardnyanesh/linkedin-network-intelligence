@@ -1,0 +1,110 @@
+# The scoring engine. Weights are configurable; the discipline is not.
+#
+# Three rules hold whatever you set the weights to:
+#
+#   1. A component that has no inputs ABSTAINS. It scores zero and says it
+#      abstained. It never scores a midpoint to look complete, because a
+#      midpoint is a guess that reads like a measurement.
+#   2. Every point awarded carries evidence. A component cannot score above
+#      zero without at least one observation behind it.
+#   3. Follower count is not a quality signal. It is capped inside
+#      `professional_influence` at `follower_subscore_cap` and can never decide
+#      a priority class on its own.
+
+scoring:
+  active_profile: default
+
+  profiles:
+    default:
+      description: Balanced for mixed networking and business development.
+      weights:
+        icp_relevance: 25
+        observable_activity: 15
+        engagement_signals: 20
+        topic_alignment: 15
+        professional_influence: 10
+        business_opportunity: 15
+
+    networking_only:
+      description: >
+        For non-commercial networking. Business opportunity is removed and its
+        points move to ICP relevance and topic alignment.
+      weights:
+        icp_relevance: 32
+        observable_activity: 18
+        engagement_signals: 25
+        topic_alignment: 20
+        professional_influence: 5
+        business_opportunity: 0
+
+    business_development:
+      description: >
+        For pipeline building. Opportunity and ICP relevance dominate; reach
+        matters least.
+      weights:
+        icp_relevance: 30
+        observable_activity: 12
+        engagement_signals: 15
+        topic_alignment: 10
+        professional_influence: 3
+        business_opportunity: 30
+
+  # Score -> priority. Evaluated top down; the first band whose minimum the
+  # score meets wins. A candidate matching any ICP exclusion criterion is
+  # `excluded` regardless of score, and the criterion is recorded verbatim.
+  priority_bands:
+    - class: priority_1
+      min_total: 70
+      min_confidence: medium
+    - class: priority_2
+      min_total: 55
+      min_confidence: low
+    - class: priority_3
+      min_total: 40
+      min_confidence: low
+    - class: monitor
+      min_total: 0
+      min_confidence: none
+
+  # A score built mostly from abstaining components is not a score. Above this
+  # many abstentions the result is reported as low confidence whatever the
+  # total, and the candidate is not promoted above `monitor`.
+  max_abstentions_before_low_confidence: 2
+
+  professional_influence:
+    # Of this component's points, at most this fraction may come from audience
+    # size. The rest comes from what the person demonstrably does: publishing,
+    # speaking, maintaining something, being cited.
+    follower_subscore_cap: 0.3
+    signals:
+      - publishes regularly on the topic
+      - speaks at industry events
+      - maintains or contributes to something others use
+      - cited or quoted by others in the field
+      - holds a role with visible decision scope
+
+  engagement_signals:
+    # Weighting inside the component. A substantive comment outranks a
+    # reaction by design: a like is not a relationship.
+    substantive_comment: 1.0
+    reply_to_user: 0.9
+    repeat_engagement: 0.8
+    share_with_commentary: 0.7
+    short_comment: 0.3
+    reaction_only: 0.1
+    # An engagement older than this contributes nothing.
+    recency_window_days: 180
+
+  observable_activity:
+    # Activity the user can see without a private analytics view.
+    recency_window_days: 90
+    signals:
+      - posted in the window
+      - commented on others in the window
+      - changed role or company in the window
+      - published an article or paper in the window
+
+  topic_alignment:
+    # Needs `profile.content_topics`. Without it this component abstains.
+    match_mode: overlap
+    min_overlap_for_points: 1

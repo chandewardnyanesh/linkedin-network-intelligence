@@ -1,0 +1,34 @@
+# Your existing audience, and the audience you want.
+#
+# `linkedin-audience-intelligence` fills `current_segments` from your own
+# analytics export. `desired_audience` is the thing only you can state, and the
+# gap between the two is the skill's main output.
+audience:
+  # Filled by the skill from an export. Hand-editing is fine.
+  current_segments: []
+  # Example of the shape, for reference:
+  #   - key: operations_leaders_manufacturing
+  #     label: Operations leaders in mid-size manufacturing
+  #     matched_icp_keys: [business_development]
+  #     size: 420
+  #     size_basis: follower export, 2026-11-01
+  #     quality: target
+  #     engagement_rate: 0.031
+
+  # What you want more of. Stated as ICP keys from icps.yaml, with a target
+  # share of the audience where you have one.
+  desired_audience: []
+  #   - icp_key: business_development
+  #     target_share: 0.35
+  #     why: these are the people who can sign
+
+  # Audiences you do not want to grow, and would rather not attract.
+  unwanted_audience: []
+  #   - label: job seekers in unrelated fields
+  #     why: inflates follower count, never converts
+
+  # Analytics exports you have supplied, for provenance.
+  exports: []
+  #   - path: ./data/imports/post-analytics-2026-11.csv
+  #     kind: linkedin_analytics_export
+  #     covers: 2026-05-01..2026-10-31

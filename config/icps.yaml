@@ -1,0 +1,179 @@
+# Ideal Connection / Customer Profiles.
+#
+# Several coexist. A candidate may match more than one: the best-fitting match
+# becomes the primary classification, the rest are recorded as secondary.
+#
+# Two fields do most of the work, and both are empty in every template below
+# because only you can fill them:
+#
+#   exclusion_criteria            what disqualifies someone. This is what stops
+#                                 a discovery run returning recruiters,
+#                                 resellers and bulk connectors.
+#   observable_engagement_signals what a person in this ICP visibly does, each
+#                                 checkable from a source this bundle may use.
+#                                 Without these, the ICP is a wish list and the
+#                                 engagement components of the score abstain.
+#
+# One ICP ships active, so the bundle does something useful with no setup. The
+# other seven are inactive templates: set `active: true` and fill them.
+#
+# `linkedin-icp-builder` edits this file with you. It will not fill either of
+# the two fields above on your behalf.
+
+icps:
+  - key: professional_networking
+    label: Senior peers and practitioners in my own field
+    purpose: professional_networking
+    priority: 2
+    active: true
+    job_titles: []
+    title_exclusions: []
+    seniority: [lead, manager, director, vp, c_level, founder_owner]
+    industries: []          # ask: your field. Empty means "any", which is noisy.
+    company_size_bands: []
+    geographies: []
+    professional_interests: []
+    content_interests: []
+    business_relevance: >
+      Peers who work on the same problems. The default ICP because it is the
+      one almost every LinkedIn user actually wants and the one least likely
+      to be mis-specified.
+    exclusion_criteria: []
+    observable_engagement_signals: []
+    notes: >
+      Narrow `industries` and `professional_interests` before the first
+      discovery run, or expect a broad shortlist.
+
+  - key: personal_brand_growth
+    label: People whose attention grows my reach in the right audience
+    purpose: personal_brand_growth
+    priority: 3
+    active: false
+    job_titles: []
+    title_exclusions: []
+    seniority: []
+    industries: []
+    company_size_bands: []
+    geographies: []
+    professional_interests: []
+    content_interests: []
+    business_relevance: >
+      Reach is only worth having inside the audience you want. This ICP is for
+      people whose engagement puts your work in front of more of that audience,
+      judged by who follows them rather than by how many.
+    exclusion_criteria: []
+    observable_engagement_signals: []
+    notes: >
+      Follower count is deliberately not a criterion here. See
+      scoring.yaml -> professional_influence.
+
+  - key: ai_technology_networking
+    label: AI and technology practitioners
+    purpose: ai_technology_networking
+    priority: 3
+    active: false
+    job_titles: []
+    title_exclusions: []
+    seniority: []
+    industries: []
+    company_size_bands: []
+    geographies: []
+    professional_interests: []
+    content_interests: []
+    business_relevance: null
+    exclusion_criteria: []
+    observable_engagement_signals: []
+    notes: null
+
+  - key: startup_ecosystem
+    label: Founders, operators and investors in the startup ecosystem
+    purpose: startup_ecosystem
+    priority: 3
+    active: false
+    job_titles: []
+    title_exclusions: []
+    seniority: [founder_owner, c_level, board_investor]
+    industries: []
+    company_size_bands: ["1", "2-10", "11-50", "51-200"]
+    geographies: []
+    professional_interests: []
+    content_interests: []
+    business_relevance: null
+    exclusion_criteria: []
+    observable_engagement_signals: []
+    notes: null
+
+  - key: business_development
+    label: People who could become customers
+    purpose: business_development
+    priority: 1
+    active: false
+    job_titles: []
+    title_exclusions: []
+    seniority: []
+    industries: []
+    company_size_bands: []
+    geographies: []
+    professional_interests: []
+    content_interests: []
+    business_relevance: null
+    exclusion_criteria: []
+    observable_engagement_signals: []
+    notes: >
+      A filled version of this ICP is commercially sensitive. Keep it out of a
+      public repository.
+
+  - key: agency_clients
+    label: Buyers of agency or consulting services
+    purpose: agency_clients
+    priority: 2
+    active: false
+    job_titles: []
+    title_exclusions: []
+    seniority: []
+    industries: []
+    company_size_bands: []
+    geographies: []
+    professional_interests: []
+    content_interests: []
+    business_relevance: null
+    exclusion_criteria: []
+    observable_engagement_signals: []
+    notes: null
+
+  - key: strategic_partnerships
+    label: Potential partners whose work complements mine
+    purpose: strategic_partnerships
+    priority: 2
+    active: false
+    job_titles: []
+    title_exclusions: []
+    seniority: []
+    industries: []
+    company_size_bands: []
+    geographies: []
+    professional_interests: []
+    content_interests: []
+    business_relevance: null
+    exclusion_criteria: []
+    observable_engagement_signals: []
+    notes: null
+
+  - key: industry_specific
+    label: A named industry I am deliberately building presence in
+    purpose: industry_specific
+    priority: 3
+    active: false
+    job_titles: []
+    title_exclusions: []
+    seniority: []
+    industries: []
+    company_size_bands: []
+    geographies: []
+    professional_interests: []
+    content_interests: []
+    business_relevance: null
+    exclusion_criteria: []
+    observable_engagement_signals: []
+    notes: >
+      Copy this entry under a new key for each industry. Keys must be unique.

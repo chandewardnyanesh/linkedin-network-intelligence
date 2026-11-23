@@ -1,0 +1,35 @@
+# The account owner. Blank on purpose: this package ships no personal data.
+#
+# A skill that needs one of these and finds it null asks a question. It does
+# not guess, and it does not proceed on an assumed answer.
+#
+# Keep a filled copy of this file out of a public repository. See
+# docs/CONFIGURATION.md and `.gitignore`.
+profile:
+  display_name: null
+  headline: null
+  profile_url: null
+
+  # What the networking is for, in your own words. One sentence.
+  primary_objective: null
+  secondary_objectives: []
+
+  industry: null
+  geography: null
+  languages: []
+
+  # Topics you actually publish about. Without these, the topic-alignment
+  # component of the score abstains rather than guessing.
+  content_topics: []
+
+  # What you sell or offer, if anything. Drives lead intelligence; leave empty
+  # if networking is not commercial.
+  services_offered: []
+
+  weekly_research_target: 100
+
+  # How many invitations you are willing to send by hand in a week. Your own
+  # capacity, not a platform limit. Leave null for no trimming.
+  weekly_invitation_capacity: null
+
+  notes: null

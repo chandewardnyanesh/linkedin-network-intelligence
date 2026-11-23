@@ -1,0 +1,11 @@
+# LinkedIn Network Intelligence Skills
+# Everything here is public documentation for an open-source MIT project.
+# Search engines, answer engines and AI agents are all welcome.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://chandewardnyanesh.github.io/linkedin-network-intelligence/sitemap.xml
+
+# A structured map of the project for LLM clients, per llmstxt.org:
+# https://chandewardnyanesh.github.io/linkedin-network-intelligence/llms.txt

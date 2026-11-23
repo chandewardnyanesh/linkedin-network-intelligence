@@ -1,0 +1,44 @@
+# What you can help with, as categories a lead can be classified against.
+#
+# `linkedin-lead-intelligence` uses this. With no categories it reports no
+# opportunities, which is the correct behaviour for someone networking
+# non-commercially.
+#
+# `observable_signals` is the only thing that turns a category into a usable
+# classifier. Each signal must be something visible in a source this bundle may
+# use: a public job posting, a company website, a conference talk, something the
+# person said in public, or something the user was told directly.
+#
+# What a signal may never be: an inference about budget, contract terms,
+# internal systems, or intent to buy. A hypothesis about a need is allowed. A
+# claim about a decision is not.
+
+business_services:
+  categories: []
+
+  # The shape, for reference. Delete or replace.
+  #
+  # - key: ai_implementation
+  #   label: AI implementation and integration
+  #   description: >
+  #     Putting a working model or assistant into an existing process.
+  #   observable_signals:
+  #     - public job posting for a role that implies the work
+  #     - the company's own site describes a manual process in this area
+  #     - the person has said in public that they are evaluating this
+  #   disqualifiers:
+  #     - the company already sells this service itself
+  #   discovery_questions:
+  #     - What does that process look like today, end to end?
+  #     - Who owns it, and what breaks when they are away?
+  #     - What have you already tried?
+  #
+  # Starter category keys, if they help you name your own:
+  #   ai_implementation, workflow_automation, website_development,
+  #   ecommerce_development, crm_implementation, data_engineering,
+  #   operational_reporting, technical_advisory
+
+  # Opportunity confidence never rises above this from signals alone. Only the
+  # user's own confirmation of a real conversation moves an opportunity past
+  # `signal_observed`.
+  max_confidence_without_user_confirmation: medium

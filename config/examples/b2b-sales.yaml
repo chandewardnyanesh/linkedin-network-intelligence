@@ -1,0 +1,130 @@
+# Example: a B2B seller or founder-seller building pipeline.
+#
+# The commercial case. Note that `business_services.categories` is filled and
+# the scoring profile is `business_development`, which moves 30 of the 100
+# points onto opportunity.
+#
+# The company here is invented. Replace everything.
+profile:
+  display_name: "Example Founder"
+  headline: "Founder · inventory software for food manufacturers"
+  primary_objective: >
+    Twelve qualified conversations a quarter with operations and supply-chain
+    leaders at food manufacturers between 50 and 500 people.
+  secondary_objectives:
+    - two referral partners in adjacent software
+  industry: "Software"
+  geography: "United States"
+  content_topics: [inventory accuracy, food manufacturing, demand planning, ERP migrations]
+  services_offered: [inventory software implementation, demand planning setup]
+  weekly_research_target: 100
+  weekly_invitation_capacity: 15
+
+scoring:
+  active_profile: business_development
+  priority_bands:
+    - class: priority_1
+      min_total: 75
+      min_confidence: medium
+    - class: priority_2
+      min_total: 60
+      min_confidence: low
+    - class: priority_3
+      min_total: 45
+      min_confidence: low
+    - class: monitor
+      min_total: 0
+      min_confidence: none
+
+icps:
+  - key: business_development
+    label: Operations and supply-chain leaders at food manufacturers
+    purpose: business_development
+    priority: 1
+    active: true
+    job_titles:
+      - VP Operations
+      - Director of Supply Chain
+      - Plant Manager
+      - Head of Inventory
+      - Operations Manager
+    title_exclusions: [Consultant, Recruiter, Student, Sales Development Representative]
+    seniority: [manager, director, vp, c_level, founder_owner]
+    industries: [Food and beverage manufacturing, Food production, Consumer packaged goods]
+    company_size_bands: ["51-200", "201-500"]
+    geographies: [United States, Canada]
+    professional_interests: [inventory accuracy, demand planning, ERP, warehouse operations]
+    content_interests: [supply chain, manufacturing operations, food safety compliance]
+    business_relevance: >
+      This is the buying committee for the product. The economic buyer is
+      usually the VP; the champion is usually the inventory lead.
+    exclusion_criteria:
+      - company already runs a competing system bought in the last 12 months
+      - company under 50 people, where the spreadsheet genuinely still works
+      - the person is a consultant or reseller rather than an operator
+      - contract manufacturer with no inventory of their own
+    observable_engagement_signals:
+      - comments on supply-chain or manufacturing posts
+      - company has posted a job for an inventory or planning role
+      - spoke at or attended a named industry event
+      - the company's own site describes a manual stock process
+
+  - key: strategic_partnerships
+    label: Adjacent software and implementation partners
+    purpose: strategic_partnerships
+    priority: 2
+    active: true
+    job_titles: [Head of Partnerships, Founder, VP Business Development]
+    title_exclusions: []
+    seniority: [director, vp, c_level, founder_owner]
+    industries: [Software, IT services]
+    company_size_bands: ["2-10", "11-50", "51-200"]
+    geographies: [United States, Canada]
+    professional_interests: [ERP integrations, manufacturing software]
+    content_interests: []
+    business_relevance: "Sells to the same buyer without competing."
+    exclusion_criteria: [sells inventory software]
+    observable_engagement_signals: [publishes about the same buyer's problems]
+
+business_services:
+  categories:
+    - key: inventory_implementation
+      label: Inventory system implementation
+      description: >
+        Replacing spreadsheet or legacy stock tracking with a working system,
+        including the data migration nobody budgets for.
+      observable_signals:
+        - public job posting for an inventory, planning or stock-control role
+        - the company's own site or careers page describes manual stock counts
+        - the person has said in public that their stock data is unreliable
+        - a published case study naming a legacy system
+      disqualifiers:
+        - the company sells inventory software itself
+        - a competing implementation was announced in the last 12 months
+      discovery_questions:
+        - How do you know today what is actually on the shelf?
+        - What happens when the count and the system disagree?
+        - Who reconciles it, and how long does that take each month?
+        - What have you already tried?
+
+    - key: demand_planning
+      label: Demand planning setup
+      description: "Getting from gut-feel ordering to a forecast someone trusts."
+      observable_signals:
+        - public job posting for a demand planner
+        - the person has described stockouts or overstock in public
+      disqualifiers: []
+      discovery_questions:
+        - What does the ordering decision look like this week?
+        - What did the last stockout cost?
+
+  max_confidence_without_user_confirmation: medium
+
+audience:
+  desired_audience:
+    - icp_key: business_development
+      target_share: 0.35
+      why: "the only segment that produces revenue"
+    - icp_key: strategic_partnerships
+      target_share: 0.1
+      why: "referral volume at a fraction of the effort"

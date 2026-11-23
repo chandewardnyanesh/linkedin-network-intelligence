@@ -1,0 +1,81 @@
+# Example: a technology professional networking without a commercial motive.
+#
+# Business opportunity is switched off entirely: `business_services.categories`
+# is empty and the scoring profile is `networking_only`, which zeroes that
+# component. `linkedin-lead-intelligence` correctly reports nothing in this
+# configuration.
+#
+# The person here is invented. Replace everything.
+profile:
+  display_name: "Example Engineer"
+  headline: "Staff engineer · distributed systems · writes about failure modes"
+  primary_objective: >
+    Know fifty people who have run the systems I am about to run, well enough
+    to ask one a direct question.
+  secondary_objectives:
+    - two conference talks a year
+    - a reading group that survives six months
+  industry: "Software"
+  geography: "Germany"
+  content_topics: [distributed systems, incident review, observability, database internals]
+  services_offered: []
+  weekly_research_target: 25
+  weekly_invitation_capacity: 5
+
+scoring:
+  active_profile: networking_only
+
+icps:
+  - key: ai_technology_networking
+    label: Practitioners who have run the systems I am about to run
+    purpose: ai_technology_networking
+    priority: 1
+    active: true
+    job_titles: [Staff Engineer, Principal Engineer, Site Reliability Engineer, Platform Engineer, Engineering Manager]
+    title_exclusions: [Technical Recruiter, Developer Advocate for a vendor I do not use, Sales Engineer]
+    seniority: [senior_ic, lead, manager]
+    industries: [Software, Internet, Financial services]
+    company_size_bands: ["201-500", "501-1000", "1001-5000", "5001-10000"]
+    geographies: [Germany, Netherlands, United Kingdom, Remote Europe]
+    professional_interests: [distributed systems, reliability, observability, databases]
+    content_interests: [incident write-ups, postmortems, systems papers]
+    business_relevance: >
+      Not commercial. The value is a direct answer to a hard question from
+      someone who has already paid for the lesson.
+    exclusion_criteria:
+      - posts vendor marketing rather than their own work
+      - no technical writing or talks of their own anywhere public
+      - headline claims ten specialisms
+    observable_engagement_signals:
+      - has published an incident write-up, a paper, or a technical talk
+      - comments technically rather than congratulating
+      - maintains or contributes to something others use
+
+  - key: industry_specific
+    label: The conference and reading-group circuit
+    purpose: industry_specific
+    priority: 3
+    active: true
+    job_titles: []
+    title_exclusions: []
+    seniority: []
+    industries: [Software]
+    company_size_bands: []
+    geographies: [Germany, Remote Europe]
+    professional_interests: [conference organising, technical community]
+    content_interests: []
+    business_relevance: "Where the talks and the reading group come from."
+    exclusion_criteria: [runs a paid community I would be promoting for free]
+    observable_engagement_signals: [organises or speaks at a named event]
+
+business_services:
+  categories: []
+
+audience:
+  desired_audience:
+    - icp_key: ai_technology_networking
+      target_share: 0.5
+      why: "the people whose answers are worth having"
+  unwanted_audience:
+    - label: vendor sales teams
+      why: "connects immediately, pitches on day two"

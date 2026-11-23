@@ -1,0 +1,104 @@
+# Default configuration. Ships with the package, contains no personal data.
+#
+# Every skill works with this file alone. The other files in this directory
+# layer on top of it; anything they omit falls back to here. A value that is
+# genuinely personal is `null` in this file, and a skill that needs it asks the
+# user rather than inventing one.
+#
+# Layer order, lowest to highest:
+#   config/default.yaml  ->  config/{profile,audience,icps,business_services,
+#                            scoring,safety}.yaml  ->  $LNI_CONFIG_DIR/*.yaml
+version: 1
+
+storage:
+  # sqlite is the default and needs no setup. postgres is for a shared or
+  # long-lived store; the DSN is read from the environment, never from a file
+  # that git can carry.
+  backend: sqlite
+  sqlite_path: ./data/network.db
+  postgres_dsn_env: LNI_POSTGRES_DSN
+  # Where CSV imports and exports land.
+  data_dir: ./data
+
+workflow:
+  # How many candidates a weekly research run aims to look at. Researching is
+  # not inviting: see `invitation_capacity_is_the_users_own` below.
+  weekly_research_target: 100
+  # One-time runs default smaller, because a user trying the bundle once does
+  # not want 100 records.
+  one_time_research_target: 25
+  # How many of the researched candidates reach the human-review shortlist.
+  shortlist_size: 25
+  # Suppress a candidate from a new shortlist if they were shortlisted within
+  # this many days and nothing changed.
+  reshortlist_cooldown_days: 60
+  # This bundle holds no view on how many invitations are safe to send. It
+  # does not model, pace or schedule platform limits, and it will not help
+  # evade them. If the user states a weekly capacity in profile.yaml, the
+  # shortlist is trimmed to it as a courtesy to their own time.
+  invitation_capacity_is_the_users_own: true
+
+relationships:
+  # Anti-repetition, enforced in code rather than offered as advice.
+  min_days_between_outbound_touches: 21
+  follow_up_window_days: [7, 45]
+  dormant_after_days: 120
+  max_follow_ups_without_reply: 2
+
+audience:
+  # A topic needs at least this many posts before an affinity figure is
+  # reported. Below it, the cell is printed as insufficient data.
+  min_posts_per_topic: 3
+  # A segment below this share of the audience is reported but not used to
+  # drive content recommendations.
+  min_segment_share_for_recommendation: 0.05
+
+reporting:
+  default_period: weekly
+  # Metrics this bundle cannot source are printed as `unavailable` with a
+  # reason. It never estimates, interpolates or carries a figure forward.
+  estimate_missing_metrics: false
+  include_attribution_limits: true
+
+provenance:
+  # A fact older than this is reported as needing re-verification.
+  stale_after_days: 180
+  require_source_on_every_record: true
+
+privacy:
+  # Data minimisation. Any field not listed is not stored even when a source
+  # offers it.
+  allowed_candidate_fields:
+    - name
+    - profile_url
+    - professional_title
+    - company
+    - industry
+    - geography
+    - seniority
+    - company_size_band
+    - shared_context
+    - tags
+    - notes
+  # Fields that are never stored, whatever an import file contains.
+  never_store:
+    - personal_email
+    - personal_phone
+    - home_address
+    - date_of_birth
+    - photograph
+    - salary
+    - family_details
+    - health_information
+    - political_affiliation
+    - religion
+  retain_days: 365
+  support_subject_export: true
+  support_subject_deletion: true
+
+output:
+  # Observations and predictions are always labelled separately.
+  separate_observations_from_predictions: true
+  show_confidence: true
+  show_evidence: true
+  max_evidence_shown_per_candidate: 5

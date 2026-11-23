@@ -1,0 +1,79 @@
+# Example: a practitioner building a personal brand.
+#
+# A single file that overrides several sections at once. Copy it to
+# $LNI_CONFIG_DIR/local.yaml, or split it back into the per-section files.
+#
+# The person here is invented. Replace everything.
+profile:
+  display_name: "Example Practitioner"
+  headline: "Operations consultant · writes about process debt"
+  primary_objective: >
+    Be the person mid-size operations leaders think of first when a process
+    breaks. Reach is only useful inside that group.
+  secondary_objectives:
+    - find two speaking slots a year
+    - keep a warm bench of three potential collaborators
+  industry: "Management consulting"
+  geography: "United Kingdom"
+  content_topics: [process debt, operations, workflow design, team capacity]
+  services_offered: []
+  weekly_research_target: 40
+  weekly_invitation_capacity: 10
+
+scoring:
+  active_profile: networking_only
+
+icps:
+  - key: personal_brand_growth
+    label: Operations leaders who publish
+    purpose: personal_brand_growth
+    priority: 1
+    active: true
+    job_titles: [Head of Operations, Operations Director, COO, Operations Manager]
+    title_exclusions: [Recruiter, Talent Acquisition, Business Development Representative]
+    seniority: [manager, director, vp, c_level]
+    industries: [Manufacturing, Logistics, Professional services]
+    company_size_bands: ["51-200", "201-500", "501-1000"]
+    geographies: [United Kingdom, Ireland, Netherlands]
+    professional_interests: [process improvement, operational reporting, capacity planning]
+    content_interests: [process debt, lean, systems thinking]
+    business_relevance: >
+      These are the people whose reshare puts the work in front of more of the
+      same people. Nobody else's reshare does.
+    exclusion_criteria:
+      - sells operations consulting themselves
+      - posts only reshared content with no commentary
+      - headline is a list of hashtags
+    observable_engagement_signals:
+      - comments with more than one sentence on operations posts
+      - has published at least one post of their own in the last 90 days
+      - replies to commenters on their own posts
+
+  - key: professional_networking
+    label: Senior peers and practitioners in my own field
+    purpose: professional_networking
+    priority: 3
+    active: true
+    seniority: [lead, manager, director, vp]
+    industries: [Management consulting, Manufacturing, Logistics]
+    professional_interests: [process improvement, operations]
+    content_interests: []
+    job_titles: []
+    title_exclusions: []
+    company_size_bands: []
+    geographies: []
+    business_relevance: "Peers worth knowing, no commercial expectation."
+    exclusion_criteria: [sells a competing service into my clients]
+    observable_engagement_signals: [active in the last 90 days]
+
+business_services:
+  categories: []
+
+audience:
+  desired_audience:
+    - icp_key: personal_brand_growth
+      target_share: 0.4
+      why: "the audience that compounds"
+  unwanted_audience:
+    - label: consultants selling to consultants
+      why: "engages heavily, converts never, crowds the comments"

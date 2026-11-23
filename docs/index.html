@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LinkedIn Network Intelligence Skills — a LinkedIn CRM and scoring engine for Claude, with no scraping</title>
+<meta name="description" content="Twelve open-source Claude Agent Skills for LinkedIn network research: ICP builder, candidate discovery, a configurable 100-point scoring engine, engagement propensity, a networking CRM, lead intelligence and funnel reporting. No scraping, no automation, no session cookies — it drafts and records, you act. MIT licensed.">
+<link rel="canonical" href="https://chandewardnyanesh.github.io/linkedin-network-intelligence/">
+<meta name="author" content="Dnyanesh Chandewar">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+
+<!-- Pointers for agents and LLM clients, per the llms.txt v2 recommendation. -->
+<link rel="describedby" type="text/markdown" href="https://chandewardnyanesh.github.io/linkedin-network-intelligence/llms.txt">
+<link rel="alternate" type="text/markdown" href="https://chandewardnyanesh.github.io/linkedin-network-intelligence/llms.txt" title="llms.txt">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LinkedIn Network Intelligence Skills">
+<meta property="og:title" content="LinkedIn Network Intelligence Skills — a LinkedIn CRM and scoring engine for Claude">
+<meta property="og:description" content="Twelve open-source Claude Agent Skills for LinkedIn network research, scoring and relationship management. No scraping, no automation, no session cookies. MIT licensed.">
+<meta property="og:url" content="https://chandewardnyanesh.github.io/linkedin-network-intelligence/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LinkedIn Network Intelligence Skills">
+<meta name="twitter:description" content="Twelve Claude Agent Skills for LinkedIn network research, scoring and a networking CRM. Drafts and records; never sends. MIT.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://chandewardnyanesh.github.io/linkedin-network-intelligence/#software",
+      "name": "LinkedIn Network Intelligence Skills",
+      "alternateName": ["linkedin-network-intelligence", "LinkedIn Network Growth Skills"],
+      "applicationCategory": "DeveloperApplication",
+      "applicationSubCategory": "AI Agent Skills",
+      "operatingSystem": "Linux, macOS, Windows",
+      "softwareVersion": "0.1.0",
+      "license": "https://opensource.org/licenses/MIT",
+      "url": "https://chandewardnyanesh.github.io/linkedin-network-intelligence/",
+      "codeRepository": "https://github.com/chandewardnyanesh/linkedin-network-intelligence",
+      "programmingLanguage": "Python",
+      "softwareRequirements": "Python 3.12 or newer; pydantic; PyYAML",
+      "author": { "@type": "Person", "name": "Dnyanesh Chandewar" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Twelve Claude Agent Skills for researching, scoring and managing a LinkedIn professional network: Ideal Connection Profile definitions, candidate discovery from authorised sources, a configurable 100-point scoring engine, engagement propensity with confidence levels, a networking CRM with a thirteen-status pipeline, lead intelligence, connection note drafting, relationship cadence, content attribution and weekly funnel reporting. The bundle drafts and records but never sends: it contains no sender, no scheduler, no scraper, no browser driver and no LinkedIn credential.",
+      "featureList": [
+        "Configurable Ideal Connection and Ideal Customer Profiles across eight purposes",
+        "Candidate discovery from authorised sources only, with source provenance on every record",
+        "Configurable 100-point scoring engine in which components with no inputs abstain rather than scoring a midpoint",
+        "Engagement propensity bands with evidence, confidence levels, and observations kept separate from predictions",
+        "Networking CRM with a thirteen-status pipeline, duplicate prevention, interaction history, SQLite or PostgreSQL",
+        "Lead intelligence that classifies opportunities as hypotheses with public evidence and never infers purchasing intent",
+        "Draft-only connection notes with multiple variations and no pitch on first contact",
+        "Relationship follow-up cadence with repetition suppressed in the engine",
+        "Content-to-audience attribution that states what the data cannot attribute",
+        "Weekly and monthly funnel reports in which unavailable metrics are named rather than estimated",
+        "A mandatory safety layer with eleven prohibited rules and an append-only audit trail",
+        "Per-person data export and deletion that cannot be disabled"
+      ],
+      "keywords": "LinkedIn, Claude Agent Skills, Claude Code, LinkedIn CRM, ICP, ideal customer profile, lead scoring, networking, relationship management, B2B sales, social selling, no scraping, open source",
+      "isAccessibleForFree": true
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://github.com/chandewardnyanesh/linkedin-network-intelligence#source",
+      "name": "linkedin-network-intelligence",
+      "codeRepository": "https://github.com/chandewardnyanesh/linkedin-network-intelligence",
+      "programmingLanguage": "Python",
+      "license": "https://opensource.org/licenses/MIT",
+      "author": { "@type": "Person", "name": "Dnyanesh Chandewar" },
+      "about": { "@id": "https://chandewardnyanesh.github.io/linkedin-network-intelligence/#software" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://chandewardnyanesh.github.io/linkedin-network-intelligence/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does it automate LinkedIn connection requests?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, and it will refuse to. The bundle contains no sender, no scheduler and no queue. It prepares invitation drafts and a review list with the profile URLs in order; you send them yourself inside LinkedIn, then tell it which went out and it records them. A request to automate sending is refused under the rule no_automated_invitations, and the refusal is written to an audit trail."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it scrape LinkedIn profiles?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. There is no scraper, no browser driver and no LinkedIn credential in the package. The restriction is enforced structurally rather than promised: the SourceKind enum that every record's provenance uses has no member for a scrape or a browser run, so a scraped record cannot be represented in the data model. Tests assert that Playwright, Selenium, Puppeteer and webdriver are not imported, and that no HTTP client is imported anywhere in the package."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it need my LinkedIn password or session cookie?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. It needs neither, and there is no environment variable to supply one. A request to use a li_at session cookie or an unofficial endpoint is refused under no_unauthorised_api. This is the main difference between this bundle and most LinkedIn automation tooling, much of which works by holding your session cookie or driving your logged-in browser."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where does its data come from?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "From sources you supply or that are public: profile URLs you paste, CSVs you build, your own LinkedIn data export, your own analytics export, public company websites, professional directories, public publications, conference and event listings, referrals, rosters you exported from another tool, and official LinkedIn APIs where you hold authorised access. Every record carries its source and a verification date, or it cannot be created."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I score LinkedIn connections?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "This bundle uses a configurable 100-point framework with six components: ICP relevance worth 25 points, observable activity 15, meaningful engagement signals 20, content-topic alignment 15, professional influence 10, and business opportunity 15. Weights are configurable and three profiles ship. Each component reports its own evidence and confidence, and the output includes a priority class and a recommended next action."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does a candidate with a perfect profile match score low?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because a component with no inputs abstains rather than scoring a midpoint. A perfect ICP match with no observable activity, no engagement history and no known topics scores around 30 and is reported as a strong ICP fit with nothing observed yet, where the gap is in what is known rather than in who the person is. A midpoint would make that candidate indistinguishable from one with real evidence at the same total."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is follower count used to rank people?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Barely, and deliberately. Audience size contributes at most 30 percent of the professional-influence component, which is three points out of a hundred on the default weighting, on a logarithmic scale, and the configuration refuses a cap above 50 percent. What counts instead is publishing regularly, speaking at events, maintaining something others use, being cited by others in the field, and holding a role with visible decision scope."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is an Ideal Connection Profile?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An Ideal Connection Profile is the networking equivalent of an Ideal Customer Profile: a written definition of who is worth connecting with, specific enough that two people looking at the same profile would agree whether it matches. This bundle supports several at once across eight purposes, each with job titles, seniority, industry, company size, geography, interests, exclusion criteria and observable engagement signals."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use it as a CRM for LinkedIn networking?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. It stores contact records with source provenance and a last-verified date, moves them through a thirteen-status pipeline from discovered to converted, keeps interaction history, prevents duplicates, supports CSV import and export, and filters and segments. SQLite is the default backend and PostgreSQL is available behind the same interface for a longer-lived store."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will it help me pace outreach to stay under LinkedIn's limits?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Pacing activity to avoid detection is refused under the rule no_detection_evasion, and the classifier catches softened phrasings such as spreading invitations over several days so they look organic, asking how many can be sent before being flagged, or warming up an account. If the real question is how much outreach is sustainable for you, state your own weekly capacity and the shortlist is trimmed to it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is this different from other LinkedIn Claude skills?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most LinkedIn skills are either content tools that write posts, comments and replies, or automation tools that drive a browser or hold a session cookie. This bundle is neither. It is a research, scoring and relationship-management layer that writes no content and automates nothing, and it routes content work to the bundles that already do it well."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which agents does it work with?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Any host that supports the Agent Skills open standard. The skills are plain Markdown with YAML frontmatter and nothing in them is Claude-specific. An agent that can also run shell commands gets the Python engine for scoring, storage and reporting; one that cannot will still follow the documented workflows."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "LinkedIn Network Intelligence Skills", "item": "https://chandewardnyanesh.github.io/linkedin-network-intelligence/" },
+        { "@type": "ListItem", "position": 2, "name": "Documentation", "item": "https://github.com/chandewardnyanesh/linkedin-network-intelligence/tree/main/docs" }
+      ]
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--ink:#14171a;--mute:#5b6570;--line:#e3e6ea;--bg:#fff;--accent:#0a66c2;--code:#f6f8fa}
+@media(prefers-color-scheme:dark){:root{--ink:#e6e9ec;--mute:#9aa4af;--line:#2a2f36;--bg:#14171a;--accent:#6cb3f5;--code:#1c2127}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:0 24px 72px}
+header{padding:64px 0 8px}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.15;letter-spacing:-.02em;margin:0 0 16px}
+.lede{font-size:clamp(17px,2.2vw,20px);color:var(--mute);margin:0 0 28px}
+h2{font-size:24px;letter-spacing:-.01em;margin:56px 0 12px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-size:17px;margin:28px 0 6px}
+p,li{color:var(--ink)}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 8px}
+.btn{display:inline-block;padding:10px 18px;border:1px solid var(--line);border-radius:8px;font-weight:600;font-size:15px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+pre{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:14px 16px;overflow-x:auto;font-size:14px;line-height:1.5}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+p code,li code,td code{background:var(--code);padding:2px 5px;border-radius:4px}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px;display:block;overflow-x:auto}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--mute);font-size:13px;text-transform:uppercase;letter-spacing:.04em}
+.note{border-left:3px solid var(--accent);padding:4px 0 4px 16px;margin:24px 0;color:var(--mute)}
+.q{font-weight:600;margin:24px 0 4px;font-size:17px}
+.a{margin:0 0 4px}
+footer{border-top:1px solid var(--line);margin-top:56px;padding-top:24px;color:var(--mute);font-size:14px}
+ul{padding-left:22px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+<h1>LinkedIn Network Intelligence Skills</h1>
+<p class="lede">Twelve open-source Claude Agent Skills that research, score and manage a LinkedIn professional network — an ICP builder, candidate discovery, a configurable 100-point scoring engine, a networking CRM, lead intelligence and weekly funnel reporting.</p>
+<p class="lede"><strong>It drafts and records. It never sends.</strong> No scraper, no browser driver, no session cookie, no LinkedIn credential.</p>
+<div class="cta">
+  <a class="btn primary" href="https://github.com/chandewardnyanesh/linkedin-network-intelligence">View on GitHub</a>
+  <a class="btn" href="https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/docs/INSTALLATION.md">Install</a>
+  <a class="btn" href="https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/docs/FAQ.md">FAQ</a>
+  <a class="btn" href="llms.txt">llms.txt</a>
+</div>
+</header>
+
+<h2>What it is</h2>
+<p>LinkedIn Network Intelligence Skills is an MIT-licensed bundle of twelve <a href="https://code.claude.com/docs/en/skills">Agent Skills</a> plus a root workflow. It turns LinkedIn from a feed into a researched network: you define who is worth knowing, it finds and ranks candidates from sources you can point at, stores them with provenance, drafts the notes, tracks the relationships, and reports the funnel.</p>
+<p>It runs on Python 3.12+ with two dependencies. There is no hosted service, no account to create and no API key.</p>
+
+<h2>Why it refuses to automate</h2>
+<p>Most LinkedIn tooling works by holding a <code>li_at</code> session cookie or driving a logged-in browser. This bundle does neither, and the restriction is enforced in code rather than promised in documentation:</p>
+<ul>
+<li>The <code>SourceKind</code> enum has no member for a scrape or a browser run, so a scraped record <em>cannot be represented</em> in the data model.</li>
+<li>No HTTP client — <code>requests</code>, <code>httpx</code>, <code>aiohttp</code>, <code>urllib3</code> — is imported anywhere in the package, and a test asserts it.</li>
+<li>Playwright, Selenium, Puppeteer and webdriver are not imported either, also asserted by test.</li>
+<li>Eleven prohibited rules load from configuration that <em>refuses to load</em> if one is removed.</li>
+<li>33 prohibited request phrasings are refused by a classifier with regression tests, including the softened forms: <em>"spread these over three days so it looks organic"</em>, <em>"how many can I send before I get flagged"</em>, <em>"warm up the account first"</em>.</li>
+</ul>
+<p class="note">Every invitation, message, comment and follow is performed by you, by hand, in LinkedIn. The bundle prepares the work and records what you did.</p>
+
+<h2>The twelve skills</h2>
+<table>
+<thead><tr><th>Skill</th><th>For</th></tr></thead>
+<tbody>
+<tr><td><code>linkedin-icp-builder</code></td><td>Define who you are looking for, across eight purposes</td></tr>
+<tr><td><code>linkedin-audience-intelligence</code></td><td>Who your audience actually is, and the gap to who you want</td></tr>
+<tr><td><code>linkedin-network-discovery</code></td><td>Find candidates and build a weekly shortlist</td></tr>
+<tr><td><code>linkedin-engagement-propensity</code></td><td>Who is likely to care, with evidence and a confidence level</td></tr>
+<tr><td><code>linkedin-network-scoring</code></td><td>Rank a pool on a configurable 100-point framework</td></tr>
+<tr><td><code>linkedin-lead-intelligence</code></td><td>Which contacts might become customers, as hypotheses</td></tr>
+<tr><td><code>linkedin-connection-strategy</code></td><td>Invitation notes worth sending, draft-only</td></tr>
+<tr><td><code>linkedin-network-crm</code></td><td>Records, a 13-status pipeline, history, provenance</td></tr>
+<tr><td><code>linkedin-relationship-manager</code></td><td>Follow-ups worth making, repetition suppressed</td></tr>
+<tr><td><code>linkedin-content-audience-attribution</code></td><td>Whether your posting is working, judged by who it brought in</td></tr>
+<tr><td><code>linkedin-network-growth-analyst</code></td><td>Weekly and monthly funnel reports</td></tr>
+<tr><td><code>linkedin-policy-safety-governor</code></td><td>The mandatory safety and compliance layer</td></tr>
+</tbody>
+</table>
+
+<h2>Install</h2>
+<pre><code>git clone https://github.com/chandewardnyanesh/linkedin-network-intelligence.git
+cd linkedin-network-intelligence
+pip install -r requirements.txt
+python -m lni config-check   # what loads, and what each skill needs from you
+python -m lni init           # create the store</code></pre>
+<p>For Claude Code, add the repository as a plugin — it ships <code>.claude-plugin/plugin.json</code> — or copy <code>skills/*</code> into <code>~/.claude/skills/</code>. Each skill directory is independently installable. Full instructions, including importing into other Agent Skills hosts and the PostgreSQL backend, are in <a href="https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/docs/INSTALLATION.md">INSTALLATION.md</a>.</p>
+
+<h2>What makes the output trustworthy</h2>
+<p>Four disciplines, enforced as validators rather than documented as intentions:</p>
+<ul>
+<li><strong>A component with no inputs abstains.</strong> It scores zero and says so. A midpoint is a guess that reads like a measurement.</li>
+<li><strong>Every point carries evidence.</strong> A scored component with no observation behind it cannot be constructed.</li>
+<li><strong>Observations and predictions are separate fields.</strong> A confident propensity band with no usable observation cannot exist.</li>
+<li><strong>A metric that cannot be sourced is <code>unavailable</code>, with the reason.</strong> Never estimated, never interpolated. The setting that would allow estimation refuses to load.</li>
+</ul>
+<p>A worked consequence: a candidate who is a perfect ICP match but has no observable activity scores around 30 and is told <em>"strong ICP fit, but nothing observed yet — the gap is in what we know, not in who they are."</em> A system that scored them 70 would be more flattering and less useful.</p>
+
+<h2>Common questions</h2>
+
+<p class="q">Does it automate LinkedIn connection requests?</p>
+<p class="a">No, and it will refuse to. It prepares invitation drafts and a review list with the profile URLs in order; you send them yourself inside LinkedIn, then tell it which went out and it records them. A request to automate sending is refused under the rule <code>no_automated_invitations</code> and written to an audit trail.</p>
+
+<p class="q">Does it scrape LinkedIn profiles?</p>
+<p class="a">No. There is no scraper, no browser driver and no LinkedIn credential. The <code>SourceKind</code> enum has no member for a scrape, so such a record cannot be represented in the data model at all, and tests assert that no browser-automation library or HTTP client is imported.</p>
+
+<p class="q">Does it need my LinkedIn password or session cookie?</p>
+<p class="a">No, and there is no environment variable to supply one. A request to use a <code>li_at</code> session cookie or an unofficial endpoint is refused under <code>no_unauthorised_api</code>.</p>
+
+<p class="q">Where does its data come from?</p>
+<p class="a">Profile URLs you paste, CSVs you build, your own LinkedIn data export, your own analytics export, public company websites, professional directories, publications, event listings, referrals, rosters you exported yourself, and official LinkedIn APIs where you hold authorised access. Every record carries its source and a verification date, or it cannot be created.</p>
+
+<p class="q">How do I score LinkedIn connections?</p>
+<p class="a">On a configurable 100-point framework with six components: ICP relevance 25, observable activity 15, meaningful engagement signals 20, content-topic alignment 15, professional influence 10, business opportunity 15. Each component reports its own evidence and confidence, and the output carries a priority class and a recommended next action.</p>
+
+<p class="q">Is follower count used to rank people?</p>
+<p class="a">Barely, and deliberately. Audience size contributes at most 30% of the professional-influence component — three points of a hundred on the default weighting — on a logarithmic scale, and the configuration refuses a cap above 50%. What counts instead: publishing regularly, speaking at events, maintaining something others use, being cited, and holding a role with visible decision scope.</p>
+
+<p class="q">What is an Ideal Connection Profile?</p>
+<p class="a">The networking equivalent of an Ideal Customer Profile: a definition of who is worth connecting with, specific enough that two people looking at the same profile would agree whether it matches. Several coexist here across eight purposes, each with exclusion criteria and observable engagement signals.</p>
+
+<p class="q">Will it help me pace outreach to stay under LinkedIn's limits?</p>
+<p class="a">No. Pacing to avoid detection is refused under <code>no_detection_evasion</code>. If the real question is how much outreach is sustainable for you, state your own weekly capacity and the shortlist is trimmed to it.</p>
+
+<p class="q">How is this different from other LinkedIn Claude skills?</p>
+<p class="a">Most are either content tools that write posts and comments, or automation tools that drive a browser or hold a session cookie. This is neither: a research, scoring and relationship-management layer that writes no content and automates nothing, and routes content work to the bundles that already do it well.</p>
+
+<p><a href="https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/docs/FAQ.md">26 more answers in the full FAQ →</a></p>
+
+<h2>Limitations, stated plainly</h2>
+<ul>
+<li><strong>It cannot find people you have no source for.</strong> No scraping means discovery volume comes from a conference listing, a team page, a directory or your own connections export — not a LinkedIn search result set.</li>
+<li><strong>Three metrics are structurally unavailable</strong> — profile visits, followers gained, content engagement from new connections — because nothing here reads LinkedIn. They fill from your own analytics export.</li>
+<li><strong>Per-person content attribution is unavailable.</strong> LinkedIn does not expose engager identity to a third party.</li>
+<li><strong>Audience segment sizes are declared, not counted.</strong> LinkedIn gives the account holder aggregate demographics, not a list of people.</li>
+<li><strong>The scoring weights are a modelling choice, not a measurement.</strong> They order your attention against goals you stated.</li>
+<li><strong>No official LinkedIn API client ships.</strong> It needs a Partner Program approval most users do not hold; the integration point is defined and left unimplemented rather than faked.</li>
+</ul>
+
+<h2>Documentation</h2>
+<table>
+<thead><tr><th>Document</th><th>What is in it</th></tr></thead>
+<tbody>
+<tr><td><a href="https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/README.md">README</a></td><td>What it is, what it refuses, install, limitations</td></tr>
+<tr><td><a href="https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/docs/SAFETY.md">Safety</a></td><td>All eleven rules, the softened phrasings, the audit trail</td></tr>
+<tr><td><a href="https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/docs/CONFIGURATION.md">Configuration</a></td><td>Seven YAML files, three worked examples, the unrelaxable settings</td></tr>
+<tr><td><a href="https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/docs/USAGE_EXAMPLES.md">Usage examples</a></td><td>Real commands and real output, per skill and end to end</td></tr>
+<tr><td><a href="https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/docs/ARCHITECTURE.md">Architecture</a></td><td>Modules, the fourteen data models, decisions and their reasons</td></tr>
+<tr><td><a href="https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/docs/CAPABILITY_GAP_ANALYSIS.md">Gap analysis</a></td><td>Each capability judged against twenty-five existing skills</td></tr>
+<tr><td><a href="llms.txt">llms.txt</a></td><td>A structured map of the project for LLM clients and agents</td></tr>
+</tbody>
+</table>
+
+<h2>Works alongside other bundles</h2>
+<p>This bundle writes no content and optimises no profile, so it does not overlap with content bundles such as <a href="https://github.com/sergebulaev/linkedin-skills">sergebulaev/linkedin-skills</a>, nor with company-Page bundles such as <a href="https://github.com/chandewardnyanesh/linkedin-company-page-skills">chandewardnyanesh/linkedin-company-page-skills</a>. Running all three gives thirty-seven skills with one overlap of substance, documented on both sides.</p>
+
+<footer>
+<p>MIT licensed. Built by Dnyanesh Chandewar. <a href="https://github.com/chandewardnyanesh/linkedin-network-intelligence">Source</a> · <a href="https://github.com/chandewardnyanesh/linkedin-network-intelligence/issues">Issues</a></p>
+<p><strong>Not affiliated with, endorsed by, or connected to LinkedIn Corporation.</strong> "LinkedIn" is a trademark of its owner and is used here only to describe what this software is for.</p>
+</footer>
+
+</div>
+</body>
+</html>

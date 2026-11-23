@@ -1,0 +1,64 @@
+# LinkedIn Network Intelligence Skills
+
+> Twelve Claude Agent Skills for researching, scoring and managing a LinkedIn
+> professional network: ICP definitions, candidate discovery from authorised
+> sources, a configurable 100-point scoring engine, engagement propensity with
+> confidence levels, a networking CRM, lead intelligence, connection drafting,
+> relationship cadence, content attribution and funnel reporting.
+
+This bundle **drafts and records. It never sends.** It contains no sender, no
+scheduler, no scraper, no browser driver and no LinkedIn credential. Every
+invitation, message, comment and follow is performed by the human user inside
+LinkedIn. It does not read LinkedIn either: it works from data the user
+supplies (CSVs, their own LinkedIn data export, their own analytics export) and
+from public pages.
+
+This matters because most LinkedIn automation tooling works by holding a
+LinkedIn session cookie or driving a browser. This project deliberately does
+not, and the restriction is enforced in code rather than promised in
+documentation: the `SourceKind` enum has no member for a scrape, so a scraped
+record cannot be represented; no HTTP client is imported anywhere in the
+package; and 33 prohibited request phrasings are refused by a classifier with
+regression tests.
+
+Licence: MIT. Not affiliated with, endorsed by, or connected to LinkedIn
+Corporation. Requires Python 3.12+ and two dependencies (pydantic, PyYAML).
+
+## What each skill does
+
+- [linkedin-policy-safety-governor](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/skills/linkedin-policy-safety-governor/SKILL.md): The mandatory safety layer. Classifies what a request would actually do, refuses eleven categories of prohibited action citing the rule, holds the approval gate, halts the run when LinkedIn flags the account, and writes an append-only audit trail.
+- [linkedin-icp-builder](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/skills/linkedin-icp-builder/SKILL.md): Builds configurable Ideal Connection Profiles and Ideal Customer Profiles across eight purposes, each with exclusion criteria and observable engagement signals.
+- [linkedin-audience-intelligence](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/skills/linkedin-audience-intelligence/SKILL.md): Analyses the user's own LinkedIn analytics export to segment the audience, build a topic affinity matrix, and measure the gap between the audience they have and the one they want.
+- [linkedin-network-discovery](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/skills/linkedin-network-discovery/SKILL.md): Finds relevant professionals from authorised sources only and produces a qualified weekly shortlist with source provenance on every record.
+- [linkedin-engagement-propensity](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/skills/linkedin-engagement-propensity/SKILL.md): Estimates who is likely to engage meaningfully, returning a band, the evidence, a confidence level and a relationship-building approach, with observations kept separate from predictions.
+- [linkedin-network-scoring](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/skills/linkedin-network-scoring/SKILL.md): Ranks connections on a configurable 100-point framework. A component with no inputs abstains rather than scoring a midpoint, and follower count is capped so audience size can never decide a ranking.
+- [linkedin-lead-intelligence](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/skills/linkedin-lead-intelligence/SKILL.md): Identifies possible business opportunities as hypotheses with public evidence attached, and recommends discovery questions. Never infers budget, contracts or purchasing intent.
+- [linkedin-connection-strategy](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/skills/linkedin-connection-strategy/SKILL.md): Prepares connection rationale and personalised invitation note variations for the user to send by hand. Draft-only; refuses to produce output intended for an automated sender.
+- [linkedin-network-crm](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/skills/linkedin-network-crm/SKILL.md): A networking CRM with a thirteen-status pipeline, interaction history, duplicate prevention, source provenance, CSV import and export, and per-person export and deletion. SQLite by default, PostgreSQL optional.
+- [linkedin-relationship-manager](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/skills/linkedin-relationship-manager/SKILL.md): Recommends who is worth a follow-up and when, drafts context-aware conversation starters from real interaction history, and suppresses anyone contacted too recently so outreach never becomes repetitive.
+- [linkedin-content-audience-attribution](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/skills/linkedin-content-audience-attribution/SKILL.md): Connects content performance to network growth, keeping impressions, reactions, comments, shares, followers and confirmed business outcomes distinct, and stating what the data cannot attribute.
+- [linkedin-network-growth-analyst](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/skills/linkedin-network-growth-analyst/SKILL.md): Produces weekly and monthly funnel reports from user-confirmed records. A metric that cannot be sourced is reported as unavailable with the reason, never estimated.
+
+## Documentation
+
+- [README](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/README.md): What the bundle is, what it refuses to do, install instructions for Claude Code and other agents, and the stated limitations.
+- [Root workflow](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/SKILL.md): The twelve-step `linkedin-network-growth` workflow that orchestrates all twelve skills, in one-time or recurring weekly mode.
+- [Safety](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/docs/SAFETY.md): All eleven prohibited rules, the softened phrasings the classifier catches, the approval gate, platform-restriction handling, the audit trail, and the honest limitations of a pattern-based classifier.
+- [Configuration](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/docs/CONFIGURATION.md): The seven YAML files, the layering order, three worked examples, and the seven settings that refuse to be relaxed.
+- [Installation](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/docs/INSTALLATION.md): Claude Code plugin and manual install, importing into other Agent Skills hosts, the PostgreSQL backend, and troubleshooting.
+- [Usage examples](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/docs/USAGE_EXAMPLES.md): Real commands and real output, per skill and end to end, including what a refusal looks like.
+- [Architecture](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/docs/ARCHITECTURE.md): Module map, the fourteen data models, the storage design, and the reasoning behind each significant decision.
+- [FAQ](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/docs/FAQ.md): Direct answers to the questions people actually ask about LinkedIn automation, scraping, terms of service, and what this bundle does instead.
+
+## Analysis of prior art
+
+- [Existing skills audit](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/docs/EXISTING_SKILLS_AUDIT.md): An inventory of twenty-five existing skills across two other LinkedIn bundles, read from source rather than from their READMEs.
+- [Capability gap analysis](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/docs/CAPABILITY_GAP_ANALYSIS.md): Each proposed capability judged against prior art, with a build, build-scoped or exclude verdict and the reasoning.
+- [Attribution](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/ATTRIBUTION.md): What was adapted from the two upstream MIT bundles, and where this one deliberately differs.
+
+## Optional
+
+- [Implementation report](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/docs/IMPLEMENTATION_REPORT.md): Build results, test counts, and the thirteen defects found and fixed during development.
+- [Contributing](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/CONTRIBUTING.md): What is open to change, what is settled, and why.
+- [Security policy](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/SECURITY.md): How to report a classifier gap or any route to acting on LinkedIn from this bundle.
+- [Changelog](https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/CHANGELOG.md): Release history.
