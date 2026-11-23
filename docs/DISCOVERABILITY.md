@@ -103,6 +103,7 @@ They crawl on their own; what they extract is what matters:
 | `.claude-plugin/plugin.json` | Present, with a keyword-bearing description |
 | Each `skills/*/SKILL.md` frontmatter `description` | All twelve written as trigger descriptions, 120–1024 chars, each saying when to use the skill |
 | Licence and stars | MIT, declared in both `LICENSE` and every `SKILL.md` |
+| A passing CI badge | `.github/workflows/ci.yml` runs the suite, the evals and the secrets scan on every push |
 
 Nothing needs submitting to them. The repository just has to be legible.
 

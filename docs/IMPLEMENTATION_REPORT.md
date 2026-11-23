@@ -289,11 +289,10 @@ Importing into another compatible agent, and the PostgreSQL backend:
 
 | Priority | Task |
 |---|---|
-| High | Verify the PostgreSQL backend against a live server; add a CI job that runs the suite on both backends |
+| High | Verify the PostgreSQL backend against a live server, and extend the CI matrix to cover it. CI currently runs SQLite on Python 3.12 and 3.13 |
 | High | Keep extending the prohibited-phrasing corpus. Defect 13 proves the method works and that the corpus is incomplete |
 | Medium | A migration test that creates a v1 store, bumps `SCHEMA_VERSION`, and asserts the forward path — currently only the refusal to write to a newer store is tested |
 | Medium | `normalise_name` and `normalise_company` handle Latin scripts and a list of legal suffixes. Both are incomplete for CJK, Arabic and Cyrillic names |
-| Medium | A GitHub Actions workflow running `scripts/selftest.sh` on 3.12 and 3.13 |
 | Medium | An agent-level eval harness that grades the 12 rubrics with a model call, kept separate from the deterministic runner so the two results are never conflated |
 | Low | An official LinkedIn API adapter, for users who hold Partner Program access |
 | Low | Importers for more analytics export shapes as LinkedIn changes them |

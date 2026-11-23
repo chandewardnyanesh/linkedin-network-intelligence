@@ -1,0 +1,55 @@
+name: tests
+
+# Runs the whole self-test on every push and pull request: the frontmatter
+# validator, the secrets and personal-data scan, the configuration load, the
+# test suite, and the twelve evaluation cases.
+#
+# The secrets scan is in CI deliberately. The one mistake that would really
+# matter in this repository is shipping a filled config/profile.yaml or an
+# export containing records about real people, and a scan that only runs when
+# someone remembers to run it is not a control.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Validate skill frontmatter
+        run: python scripts/check_frontmatter.py
+
+      - name: Scan for credentials and personal data
+        run: python scripts/check_no_secrets.py
+
+      - name: Check the configuration loads
+        run: python -m lni config-check
+
+      - name: Run the test suite
+        run: python -m pytest -p no:cacheprovider
+
+      - name: Run the evaluation cases
+        run: python -m evals.run_evals --quiet

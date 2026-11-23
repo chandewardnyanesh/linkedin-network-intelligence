@@ -9,7 +9,7 @@ cadence, content attribution and weekly funnel reporting.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/)
-[![Tests](https://img.shields.io/badge/tests-444%20passing-brightgreen.svg)](#how-do-i-verify-it-works)
+[![tests](https://github.com/chandewardnyanesh/linkedin-network-intelligence/actions/workflows/ci.yml/badge.svg)](https://github.com/chandewardnyanesh/linkedin-network-intelligence/actions/workflows/ci.yml)
 [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-open%20standard-5A4FCF.svg)](https://code.claude.com/docs/en/skills)
 
 📖 **[Documentation site](https://chandewardnyanesh.github.io/linkedin-network-intelligence/)** ·
@@ -271,6 +271,9 @@ python -m pytest              # 444 tests
 python -m evals.run_evals     # 12 evaluation cases, 105 assertions
 sh scripts/selftest.sh        # everything, including the secrets scan
 ```
+
+CI runs all of it on Python 3.12 and 3.13 for every push and pull request,
+including the secrets and personal-data scan.
 
 Python 3.12+, pydantic for validation, SQLite by default with PostgreSQL behind
 the same interface, YAML configuration. Two runtime dependencies. No API

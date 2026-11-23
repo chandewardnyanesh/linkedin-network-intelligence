@@ -81,6 +81,16 @@ First release. Twelve skills, a root workflow, and the engine behind them.
 - `docs/DISCOVERABILITY.md` documents every lever and the four steps that can
   only be done in the GitHub interface.
 
+### Project infrastructure
+
+- `.github/workflows/ci.yml` runs the frontmatter validator, the secrets and
+  personal-data scan, the configuration load, the test suite and the twelve
+  evaluation cases on Python 3.12 and 3.13 for every push and pull request.
+- A safety-gap issue template, because the exact wording that got past the
+  classifier *is* the report, and a free-form issue tends not to include it.
+- `scripts/setup-github.sh` sets the repository description, topics, homepage
+  and Pages in one run.
+
 ### Testing
 
 - 444 tests across 10 modules, including 77 safety-boundary cases and an

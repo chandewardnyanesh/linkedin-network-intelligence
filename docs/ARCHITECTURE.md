@@ -11,6 +11,7 @@ lni/                          13 Python modules
 tests/                        10 pytest modules, 444 tests
 evals/                        12 graded evaluation cases
 docs/                         9 documents
+.github/workflows/ci.yml      the whole self-test, on 3.12 and 3.13
 ```
 
 ## Modules

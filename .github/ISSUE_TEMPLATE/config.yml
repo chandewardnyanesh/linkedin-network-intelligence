@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security advisory
+    url: https://github.com/chandewardnyanesh/linkedin-network-intelligence/security/advisories/new
+    about: Any route to acting on LinkedIn from this bundle, or data leaking out of it. Private, not a public issue.
+  - name: Question answered in the FAQ
+    url: https://github.com/chandewardnyanesh/linkedin-network-intelligence/blob/main/docs/FAQ.md
+    about: 26 answers on automation, scraping, terms of service, scoring and data handling.
